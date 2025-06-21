@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Users, Calendar, Trophy, QrCode } from 'lucide-react';
+import { Users, Calendar, Trophy, QrCode, Smartphone, Monitor } from 'lucide-react';
 
 const Index = () => {
   return (
@@ -28,7 +28,7 @@ const Index = () => {
                 <p className="text-gray-600 mb-6">
                   Manage users, create activities, generate QR codes, and monitor leaderboards
                 </p>
-                <div className="flex justify-center space-x-4 mb-6">
+                <div className="flex justify-center space-x-4 mb-4">
                   <div className="flex items-center text-sm text-gray-500">
                     <Calendar className="w-4 h-4 mr-2" />
                     Activities
@@ -41,6 +41,11 @@ const Index = () => {
                     <Trophy className="w-4 h-4 mr-2" />
                     Analytics
                   </div>
+                </div>
+                <div className="flex items-center justify-center space-x-2 text-xs text-blue-600 mb-6">
+                  <Monitor className="w-4 h-4" />
+                  <Smartphone className="w-4 h-4" />
+                  <span>Desktop & Mobile Compatible</span>
                 </div>
                 <button className="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors group-hover:bg-blue-700">
                   Access Admin Panel
@@ -60,7 +65,7 @@ const Index = () => {
                 <p className="text-gray-600 mb-6">
                   Scan QR codes, earn points, and track your position on the leaderboard
                 </p>
-                <div className="flex justify-center space-x-4 mb-6">
+                <div className="flex justify-center space-x-4 mb-4">
                   <div className="flex items-center text-sm text-gray-500">
                     <QrCode className="w-4 h-4 mr-2" />
                     QR Scan
@@ -74,8 +79,12 @@ const Index = () => {
                     Leaderboard
                   </div>
                 </div>
+                <div className="flex items-center justify-center space-x-2 text-xs text-green-600 mb-6">
+                  <Smartphone className="w-4 h-4" />
+                  <span>Mobile Only Access</span>
+                </div>
                 <button className="bg-green-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-700 transition-colors group-hover:bg-green-700">
-                  Enter as Attendee
+                  Enter Mobile Portal
                 </button>
               </div>
             </div>
