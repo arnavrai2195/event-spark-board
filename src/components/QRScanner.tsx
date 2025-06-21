@@ -1,6 +1,6 @@
 
 import React, { useState, useRef, useEffect } from 'react';
-import { Camera, ArrowLeft, RotateCcw, Zap } from 'lucide-react';
+import { Camera, ArrowLeft, RotateCcw, Zap, Info } from 'lucide-react';
 
 interface QRScannerProps {
   onScanSuccess: (qrData: string) => void;
@@ -63,73 +63,68 @@ const QRScanner: React.FC<QRScannerProps> = ({ onScanSuccess, onBack }) => {
   };
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center space-x-4">
+    <div className="pb-20">
+      <div className="flex items-center space-x-4 mb-6">
         <button
           onClick={onBack}
           className="p-2 text-gray-600 hover:text-gray-800 transition-colors"
         >
           <ArrowLeft className="w-6 h-6" />
         </button>
-        <h2 className="text-2xl font-bold text-gray-900">QR Code Scanner</h2>
+        <h2 className="text-xl font-bold text-gray-900">QR Scanner</h2>
       </div>
 
-      <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+      <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden mb-6">
         <div className="p-6">
-          <div className="text-center mb-6">
-            <Camera className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-            <h3 className="text-lg font-semibold text-gray-900 mb-2">
-              {isScanning ? 'Point camera at QR code' : 'Ready to scan QR codes'}
-            </h3>
-            <p className="text-gray-600">
-              {isScanning 
-                ? 'Hold your device steady and ensure the QR code is clearly visible'
-                : 'Start your camera to scan activity QR codes and earn points'
-              }
-            </p>
-          </div>
-
           {error && (
-            <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-6">
+            <div className="bg-red-50 border border-red-200 rounded-xl p-4 mb-6">
               <p className="text-red-800 text-sm">{error}</p>
             </div>
           )}
 
-          <div className="relative">
+          <div className="relative mb-6">
             {isScanning ? (
               <div className="relative">
                 <video
                   ref={videoRef}
-                  className="w-full h-64 bg-gray-900 rounded-lg object-cover"
+                  className="w-full h-80 bg-gray-900 rounded-xl object-cover"
                   playsInline
                   muted
                 />
                 
                 {/* QR Code Overlay */}
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="w-48 h-48 border-2 border-white rounded-lg relative">
-                    <div className="absolute top-0 left-0 w-6 h-6 border-t-4 border-l-4 border-green-500 rounded-tl-lg"></div>
-                    <div className="absolute top-0 right-0 w-6 h-6 border-t-4 border-r-4 border-green-500 rounded-tr-lg"></div>
-                    <div className="absolute bottom-0 left-0 w-6 h-6 border-b-4 border-l-4 border-green-500 rounded-bl-lg"></div>
-                    <div className="absolute bottom-0 right-0 w-6 h-6 border-b-4 border-r-4 border-green-500 rounded-br-lg"></div>
+                  <div className="w-56 h-56 border-2 border-white rounded-xl relative">
+                    <div className="absolute top-0 left-0 w-8 h-8 border-t-4 border-l-4 border-red-500 rounded-tl-xl"></div>
+                    <div className="absolute top-0 right-0 w-8 h-8 border-t-4 border-r-4 border-red-500 rounded-tr-xl"></div>
+                    <div className="absolute bottom-0 left-0 w-8 h-8 border-b-4 border-l-4 border-red-500 rounded-bl-xl"></div>
+                    <div className="absolute bottom-0 right-0 w-8 h-8 border-b-4 border-r-4 border-red-500 rounded-br-xl"></div>
                   </div>
+                </div>
+
+                {/* Instructions overlay */}
+                <div className="absolute bottom-4 left-4 right-4 bg-black/70 rounded-xl p-3">
+                  <p className="text-white text-center text-sm">Point camera at QR code</p>
                 </div>
               </div>
             ) : (
-              <div className="w-full h-64 bg-gray-100 rounded-lg flex items-center justify-center">
+              <div className="w-full h-80 bg-gradient-to-br from-gray-100 to-gray-200 rounded-xl flex items-center justify-center">
                 <div className="text-center">
-                  <Camera className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-                  <p className="text-gray-500">Camera preview will appear here</p>
+                  <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <Camera className="w-8 h-8 text-red-600" />
+                  </div>
+                  <p className="text-gray-600 font-medium">Ready to scan QR codes</p>
+                  <p className="text-gray-500 text-sm">Camera preview will appear here</p>
                 </div>
               </div>
             )}
           </div>
 
-          <div className="flex justify-center space-x-4 mt-6">
+          <div className="flex justify-center space-x-3">
             {!isScanning ? (
               <button
                 onClick={startCamera}
-                className="flex items-center px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
+                className="flex items-center px-8 py-3 bg-gradient-to-r from-red-500 to-orange-500 text-white rounded-xl hover:from-red-600 hover:to-orange-600 transition-all shadow-lg"
               >
                 <Camera className="w-5 h-5 mr-2" />
                 Start Scanning
@@ -138,24 +133,30 @@ const QRScanner: React.FC<QRScannerProps> = ({ onScanSuccess, onBack }) => {
               <>
                 <button
                   onClick={simulateScan}
-                  className="flex items-center px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                  className="flex items-center px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-xl hover:from-blue-600 hover:to-purple-700 transition-all shadow-lg"
                 >
                   <Zap className="w-5 h-5 mr-2" />
                   Demo Scan
                 </button>
                 <button
                   onClick={stopCamera}
-                  className="flex items-center px-4 py-3 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors"
+                  className="flex items-center px-6 py-3 bg-gray-600 text-white rounded-xl hover:bg-gray-700 transition-all"
                 >
                   <RotateCcw className="w-5 h-5 mr-2" />
-                  Stop Camera
+                  Stop
                 </button>
               </>
             )}
           </div>
+        </div>
+      </div>
 
-          <div className="mt-6 p-4 bg-blue-50 rounded-lg">
-            <h4 className="font-semibold text-blue-900 mb-2">Instructions:</h4>
+      {/* Instructions Card */}
+      <div className="bg-blue-50 rounded-xl p-4 border border-blue-200">
+        <div className="flex items-start space-x-3">
+          <Info className="w-5 h-5 text-blue-600 mt-0.5" />
+          <div>
+            <h4 className="font-semibold text-blue-900 mb-2">How to scan:</h4>
             <ul className="text-sm text-blue-800 space-y-1">
               <li>• Point your camera at the QR code</li>
               <li>• Ensure good lighting for best results</li>

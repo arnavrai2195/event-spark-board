@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { QrCode, Trophy, User, Camera, CheckCircle, AlertCircle } from 'lucide-react';
+import { QrCode, Trophy, User, Camera, CheckCircle, AlertCircle, Calendar, Users, Gift } from 'lucide-react';
 import AttendeeHeader from '../components/AttendeeHeader';
 import QRScanner from '../components/QRScanner';
 import AttendeeLeaderboard from '../components/AttendeeLeaderboard';
@@ -36,48 +36,44 @@ const AttendeeDashboard = () => {
     switch (activeView) {
       case 'home':
         return (
-          <div className="space-y-6">
-            {/* Welcome Section */}
-            <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-              <div className="flex items-center space-x-4">
-                <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center">
-                  <span className="text-blue-600 font-bold text-xl">
-                    {userName.split(' ').map(n => n[0]).join('')}
-                  </span>
-                </div>
+          <div className="space-y-4 pb-20">
+            {/* Event Header */}
+            <div className="bg-gradient-to-br from-red-500 via-orange-500 to-yellow-500 rounded-2xl p-6 text-white mb-6">
+              <div className="flex items-center justify-between mb-4">
                 <div>
-                  <h2 className="text-2xl font-bold text-gray-900">Welcome, {userName}!</h2>
-                  <p className="text-gray-600">{userCompany}</p>
+                  <h2 className="text-2xl font-bold">Annual Education Summit 2025</h2>
+                  <p className="text-orange-100">20 June 2025</p>
+                </div>
+                <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center">
+                  <Calendar className="w-6 h-6" />
                 </div>
               </div>
             </div>
 
-            {/* Stats Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-xl p-6">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-blue-100 text-sm">Total Points</p>
-                    <p className="text-3xl font-bold">{userPoints.toLocaleString()}</p>
-                  </div>
-                  <Trophy className="w-12 h-12 text-blue-200" />
+            {/* User Stats Cards */}
+            <div className="grid grid-cols-2 gap-4 mb-6">
+              <div className="bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl p-4 text-white">
+                <div className="flex items-center justify-between mb-2">
+                  <Trophy className="w-8 h-8 text-blue-200" />
+                  <span className="text-xs bg-white/20 px-2 py-1 rounded-full">Total</span>
                 </div>
+                <p className="text-2xl font-bold">{userPoints.toLocaleString()}</p>
+                <p className="text-blue-100 text-sm">Points</p>
               </div>
 
-              <div className="bg-gradient-to-r from-green-500 to-green-600 text-white rounded-xl p-6">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <p className="text-green-100 text-sm">Current Rank</p>
-                    <p className="text-3xl font-bold">#{userRank}</p>
-                  </div>
-                  <User className="w-12 h-12 text-green-200" />
+              <div className="bg-gradient-to-br from-green-500 to-teal-600 rounded-xl p-4 text-white">
+                <div className="flex items-center justify-between mb-2">
+                  <Users className="w-8 h-8 text-green-200" />
+                  <span className="text-xs bg-white/20 px-2 py-1 rounded-full">Rank</span>
                 </div>
+                <p className="text-2xl font-bold">#{userRank}</p>
+                <p className="text-green-100 text-sm">Position</p>
               </div>
             </div>
 
             {/* Scan Result Alert */}
             {scanResult && (
-              <div className={`rounded-lg p-4 flex items-center space-x-3 ${
+              <div className={`rounded-xl p-4 flex items-center space-x-3 mb-4 ${
                 scanResult.type === 'success' ? 'bg-green-50 border border-green-200' :
                 scanResult.type === 'duplicate' ? 'bg-yellow-50 border border-yellow-200' :
                 'bg-red-50 border border-red-200'
@@ -99,25 +95,48 @@ const AttendeeDashboard = () => {
               </div>
             )}
 
-            {/* Quick Actions */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {/* Quick Actions Grid */}
+            <div className="grid grid-cols-2 gap-4 mb-6">
               <button
                 onClick={() => setActiveView('scan')}
-                className="bg-white border-2 border-dashed border-gray-300 rounded-xl p-8 hover:border-blue-500 hover:bg-blue-50 transition-all text-center group"
+                className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-all group"
               >
-                <QrCode className="w-12 h-12 text-gray-400 group-hover:text-blue-500 mx-auto mb-4" />
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">Scan QR Code</h3>
-                <p className="text-gray-600">Scan activity QR codes to earn points</p>
+                <div className="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center mb-4 group-hover:bg-red-200 transition-colors">
+                  <QrCode className="w-6 h-6 text-red-600" />
+                </div>
+                <h3 className="font-semibold text-gray-900 mb-1">Scan QR</h3>
+                <p className="text-sm text-gray-600">Earn points by scanning</p>
               </button>
 
               <button
                 onClick={() => setActiveView('leaderboard')}
-                className="bg-white border-2 border-dashed border-gray-300 rounded-xl p-8 hover:border-green-500 hover:bg-green-50 transition-all text-center group"
+                className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-all group"
               >
-                <Trophy className="w-12 h-12 text-gray-400 group-hover:text-green-500 mx-auto mb-4" />
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">View Leaderboard</h3>
-                <p className="text-gray-600">See your ranking and competitors</p>
+                <div className="w-12 h-12 bg-yellow-100 rounded-full flex items-center justify-center mb-4 group-hover:bg-yellow-200 transition-colors">
+                  <Trophy className="w-6 h-6 text-yellow-600" />
+                </div>
+                <h3 className="font-semibold text-gray-900 mb-1">Leaderboard</h3>
+                <p className="text-sm text-gray-600">Check your ranking</p>
               </button>
+            </div>
+
+            {/* Additional Features */}
+            <div className="grid grid-cols-2 gap-4">
+              <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+                <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mb-4">
+                  <Users className="w-6 h-6 text-purple-600" />
+                </div>
+                <h3 className="font-semibold text-gray-900 mb-1">Networking</h3>
+                <p className="text-sm text-gray-600">Connect with attendees</p>
+              </div>
+
+              <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100">
+                <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mb-4">
+                  <Gift className="w-6 h-6 text-green-600" />
+                </div>
+                <h3 className="font-semibold text-gray-900 mb-1">Rewards</h3>
+                <p className="text-sm text-gray-600">View prize details</p>
+              </div>
             </div>
           </div>
         );
@@ -137,39 +156,45 @@ const AttendeeDashboard = () => {
     <div className="min-h-screen bg-gray-50">
       <AttendeeHeader userName={userName} userPoints={userPoints} />
       
-      {/* Mobile Navigation */}
-      <div className="lg:hidden bg-white border-b border-gray-200 px-4 py-2">
-        <div className="flex space-x-4">
+      <main className="px-4 py-6">
+        {renderContent()}
+      </main>
+
+      {/* Bottom Navigation */}
+      <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-4 py-2 safe-area-pb">
+        <div className="flex justify-around items-center">
           <button
             onClick={() => setActiveView('home')}
-            className={`flex-1 py-2 px-4 rounded-lg text-center font-medium transition-colors ${
-              activeView === 'home' ? 'bg-blue-100 text-blue-600' : 'text-gray-600 hover:bg-gray-100'
+            className={`flex flex-col items-center py-2 px-4 rounded-lg transition-colors ${
+              activeView === 'home' ? 'text-red-600 bg-red-50' : 'text-gray-600'
             }`}
           >
-            Home
+            <User className="w-5 h-5 mb-1" />
+            <span className="text-xs font-medium">Home</span>
           </button>
+          
           <button
             onClick={() => setActiveView('scan')}
-            className={`flex-1 py-2 px-4 rounded-lg text-center font-medium transition-colors ${
-              activeView === 'scan' ? 'bg-blue-100 text-blue-600' : 'text-gray-600 hover:bg-gray-100'
+            className={`flex flex-col items-center py-2 px-4 rounded-lg transition-colors ${
+              activeView === 'scan' ? 'text-red-600 bg-red-50' : 'text-gray-600'
             }`}
           >
-            Scan
+            <div className="w-12 h-12 bg-red-500 rounded-full flex items-center justify-center mb-1 shadow-lg">
+              <QrCode className="w-6 h-6 text-white" />
+            </div>
           </button>
+          
           <button
             onClick={() => setActiveView('leaderboard')}
-            className={`flex-1 py-2 px-4 rounded-lg text-center font-medium transition-colors ${
-              activeView === 'leaderboard' ? 'bg-blue-100 text-blue-600' : 'text-gray-600 hover:bg-gray-100'
+            className={`flex flex-col items-center py-2 px-4 rounded-lg transition-colors ${
+              activeView === 'leaderboard' ? 'text-red-600 bg-red-50' : 'text-gray-600'
             }`}
           >
-            Leaderboard
+            <Trophy className="w-5 h-5 mb-1" />
+            <span className="text-xs font-medium">Ranking</span>
           </button>
         </div>
       </div>
-
-      <main className="max-w-4xl mx-auto px-4 py-6">
-        {renderContent()}
-      </main>
     </div>
   );
 };
